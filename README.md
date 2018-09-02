@@ -2,6 +2,6 @@
 
 An idea of development : WMTS in go, using MongoDB, implementing HTTP 2
 
-**rok4** is a WMTS server develop by French Geographic Institut : rok4.org && github.com/rok4/rok4
+**rok4** is a WMTS server develop by French Geographic Institut : [rok4.org](http://rok4.org) && [github.com/rok4/rok4](https://github.com/rok4/rok4)
 
-Develop guide : [./DEVELOP.md]
+[Develop guide available here](DEVELOP.md)
