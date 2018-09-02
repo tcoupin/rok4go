@@ -2,13 +2,14 @@
 
 ## Start development environment (docker + docker-compose)
 
-* rok4go-bin: container watching gofile and building binary using dev mode (Assets are not bundle in a gofile)
+* rok4go-bin: container watching go files and building binary using dev mode (Assets are not bundled in a gofile)
 * rok4go-ui: container watching and building ui using webpack
 * mongo: mongo... ;)
 * mongo-express: ui for mongo
 
 ```
-docker-compose -f dev-env/docker-compose.yml up -d
+cd dev-env
+docker-compose up -d
 ```
 
 URLs:
@@ -19,10 +20,15 @@ URLs:
 * Mongo Express: http://127.0.0.1:8081
 
 
-## Build
+## Build, test...
+
+On start, rok4go-bin container builds binary and starts watching for change in go files.
+
+To run makefile targets in a docker container, run `make TARGET-docker`.
 
 ```
-make
+make test-docker
+make server-docker
 ```
 
 # Useful links

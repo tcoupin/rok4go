@@ -1,10 +1,11 @@
 package wmts
 
 import (
-	"github.com/stretchr/testify/assert"
-	"github.com/tcoupin/rok4go/protocol/http"
 	nethttp "net/http"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/tcoupin/rok4go/server/protocol/http"
 )
 
 func TestExceptionCode(t *testing.T) {
