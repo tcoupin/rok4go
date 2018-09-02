@@ -1,0 +1,47 @@
+version: "3.0"
+services:
+  rok4go-bin:
+    build: 
+      context: .
+      dockerfile: build.Dockerfile
+    links:
+      - mongo
+    volumes: 
+      - $GOPATH:/go
+    ports:
+      - "8080:8080"
+    command: make server-bin-watch
+    working_dir: /go/src/github.com/tcoupin/rok4go
+
+  rok4go-ui:
+    build: 
+      context: .
+      dockerfile: build.Dockerfile
+    volumes: 
+      - $GOPATH:/go
+    command: make server-ui-watch
+    working_dir: /go/src/github.com/tcoupin/rok4go
+    
+  mongo:
+    image: mongo:4.0
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: root
+#      MONGO_INITDB_ROOT_PASSWORD: toor
+#      MONGO_INITDB_DATABASE: rok4
+    volumes:
+      - mongo:/data/db
+    ports:
+      - "27017:27017"
+
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 8081:8081
+    links:
+      - mongo
+#    environment:
+#      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+#      ME_CONFIG_MONGODB_ADMINPASSWORD: toor
+
+volumes:
+  mongo:
