@@ -2,7 +2,7 @@
 
 ## Start development environment (docker + docker-compose)
 
-* rok4go-bin: container watching gofile and building binary using dev mode (Assets are not bundle in a gofile)
+* rok4go-bin: container watching gofile and building binary using dev mode (Assets are not bundled in a gofile)
 * rok4go-ui: container watching and building ui using webpack
 * mongo: mongo... ;)
 * mongo-express: ui for mongo
