@@ -7,7 +7,7 @@ services:
     links:
       - mongo
     volumes: 
-      - $GOPATH:/go
+      - .:/go/src/github.com/tcoupin/rok4go
     ports:
       - "8080:8080"
     command: make server-bin-watch
@@ -18,7 +18,7 @@ services:
       context: dev-env
       dockerfile: build.Dockerfile
     volumes: 
-      - $GOPATH:/go
+      - .:/go/src/github.com/tcoupin/rok4go
     command: make server-ui-watch
     working_dir: /go/src/github.com/tcoupin/rok4go
     
