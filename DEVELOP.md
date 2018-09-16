@@ -8,7 +8,6 @@
 * mongo-express: ui for mongo
 
 ```
-cd dev-env
 docker-compose up -d
 ```
 

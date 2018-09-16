@@ -20,6 +20,7 @@ server: dist server-ui server-bin ## build only server
 server-bin: install-dependencies
 	go generate --tags generate ./... && \
 	go build ${BUILD_OPTS} -o $(DIST_DIR)/$(SERVER_BIN) ./cli/server.go
+
 server-bin-dev: install-dependencies
 	go build --tags dev ${BUILD_OPTS} -o $(DIST_DIR)/$(SERVER_BIN) ./cli/server.go
 server-bin-watch: install-dependencies ## watch, build and run server, using raw assets
@@ -61,4 +62,4 @@ help: ## this help
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {sub("\\\\n",sprintf("\n%22c"," "), $$2);printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
 %-docker:
-	cd dev-env && docker-compose exec rok4go-bin make $*
+	docker-compose exec bin make $*

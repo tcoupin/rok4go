@@ -3,16 +3,17 @@
 package main
 
 import (
-	"github.com/shurcooL/vfsgen"
 	"log"
 	"net/http"
+
+	"github.com/shurcooL/vfsgen"
 )
 
 func main() {
 
 	err := vfsgen.Generate(http.Dir("ui/dist"), vfsgen.Options{
 		PackageName:  "resources",
-		BuildTags:    "!dev",
+		BuildTags:    "!dev,!generate,!test",
 		VariableName: "Assets",
 	})
 	if err != nil {

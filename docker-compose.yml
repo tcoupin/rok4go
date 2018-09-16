@@ -1,8 +1,8 @@
 version: "3.0"
 services:
-  rok4go-bin:
+  bin:
     build: 
-      context: .
+      context: dev-env
       dockerfile: build.Dockerfile
     links:
       - mongo
@@ -13,9 +13,9 @@ services:
     command: make server-bin-watch
     working_dir: /go/src/github.com/tcoupin/rok4go
 
-  rok4go-ui:
+  ui:
     build: 
-      context: .
+      context: dev-env
       dockerfile: build.Dockerfile
     volumes: 
       - $GOPATH:/go

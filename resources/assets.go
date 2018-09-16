@@ -1,4 +1,4 @@
-// +build dev || generate
+// +build dev generate test
 
 //go:generate go run -tags=dev assets_generate.go
 
