@@ -3,7 +3,7 @@
 SERVER_BIN=rok4go_server
 BUILD_OPTS=
 COVERFILE=${DIST_DIR}/cover.out
-TEST_OPTS= -coverprofile=${COVERFILE} -tags test
+TEST_OPTS= -coverprofile=${COVERFILE}
 
 DIST_DIR=dist
 RESOURCES_DIR=resources
@@ -11,14 +11,15 @@ UI_DIR=${RESOURCES_DIR}/ui
 
 all: server
 
-install-dependencies: ${UI_DIR}/node_modules
-	go get -tags generate ./... && \
-	go get -tags dev ./...
+install-dependencies: vendor ${UI_DIR}/node_modules
+
+vendor:
+	dep ensure
 
 server: dist server-ui server-bin ## build only server
 
 server-bin: install-dependencies
-	go generate --tags generate ./... && \
+	go generate --tags dev ./... && \
 	go build ${BUILD_OPTS} -o $(DIST_DIR)/$(SERVER_BIN) ./cli/server.go
 
 server-bin-dev: install-dependencies
@@ -44,7 +45,7 @@ unittestcover: unittest ## show unit tests coverage
 test: unittest ## run tests
 
 unittest: dist install-dependencies
-	go test $(TEST_OPTS) ./...
+	go test --tags test $(TEST_OPTS) ./...
 
 dist:
 	mkdir -p $(DIST_DIR)
@@ -55,8 +56,9 @@ clean: ## cleanup generated files
 	rm -rf ${UI_DIR}/dist
 	
 
-clean-full: clean ## cleanup generated files + node_modules for ui
-	rm -r ${UI_DIR}/node_modules
+clean-full: clean ## cleanup generated files + node_modules and vendor directory
+	rm -r ${UI_DIR}/node_modules && \
+	rm -r vendor
 
 help: ## this help
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {sub("\\\\n",sprintf("\n%22c"," "), $$2);printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
