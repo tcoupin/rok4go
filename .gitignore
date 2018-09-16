@@ -2,3 +2,4 @@ dist
 resources/assets_vfsdata.go
 resources/ui/dist
 resources/ui/node_modules
+resources/ui/yarn.lock

@@ -11,14 +11,18 @@ UI_DIR=${RESOURCES_DIR}/ui
 
 all: server
 
+install-dependencies: ${UI_DIR}/node_modules
+	go get -tags generate ./... && \
+	go get -tags dev ./...
+
 server: dist server-ui server-bin ## build only server
 
-server-bin:
+server-bin: install-dependencies
 	go generate --tags generate ./... && \
 	go build ${BUILD_OPTS} -o $(DIST_DIR)/$(SERVER_BIN) ./cli/server.go
-server-bin-dev:
+server-bin-dev: install-dependencies
 	go build --tags dev ${BUILD_OPTS} -o $(DIST_DIR)/$(SERVER_BIN) ./cli/server.go
-server-bin-watch: ## watch, build and run server, using raw assets
+server-bin-watch: install-dependencies ## watch, build and run server, using raw assets
 	nodemon -e go -x "sh -c" "make server-bin-dev && ./$(DIST_DIR)/$(SERVER_BIN) --mongodb mongo:27017"
 
 server-ui: ${UI_DIR}/node_modules
@@ -38,7 +42,7 @@ unittestcover: unittest ## show unit tests coverage
 
 test: unittest ## run tests
 
-unittest: dist
+unittest: dist install-dependencies
 	go test $(TEST_OPTS) ./...
 
 dist:
