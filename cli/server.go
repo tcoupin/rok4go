@@ -2,12 +2,13 @@ package main
 
 import (
 	"flag"
+	"os"
+
 	"github.com/tcoupin/rok4go/objects"
 	"github.com/tcoupin/rok4go/objects/backend"
 	"github.com/tcoupin/rok4go/server"
 	"github.com/tcoupin/rok4go/utils/cli"
 	"github.com/tcoupin/rok4go/utils/log"
-	"os"
 )
 
 func main() {

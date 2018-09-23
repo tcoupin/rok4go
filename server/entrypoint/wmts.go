@@ -2,21 +2,25 @@ package entrypoint
 
 import (
 	"fmt"
+	nethttp "net/http"
+	"strings"
+
 	"github.com/tcoupin/rok4go/objects"
 	"github.com/tcoupin/rok4go/server/protocol/http"
 	"github.com/tcoupin/rok4go/server/protocol/wmts"
-	nethttp "net/http"
-	"strings"
 )
 
+// WMTSHandler is an handle for WMTS protocol
 type WMTSHandler struct {
 	config *objects.Config
 }
 
+// NewWMTSHandler creates handler for WMTS
 func NewWMTSHandler(config *objects.Config) WMTSHandler {
 	return WMTSHandler{config: config}
 }
 
+// ServeHTTP handles request
 func (w WMTSHandler) ServeHTTP(res nethttp.ResponseWriter, req *nethttp.Request) {
 	if err := req.ParseForm(); err != nil {
 		wmts.NoApplicableCode(fmt.Sprint(err)).HTTPResponse().Write(res)

@@ -1,20 +1,21 @@
 package api
 
 import (
-	myhttp "github.com/tcoupin/rok4go/server/protocol/http"
 	"net/http"
+
+	myhttp "github.com/tcoupin/rok4go/server/protocol/http"
 )
 
-type APIException struct {
+type apiResponse struct {
 	Code    int
 	Status  string
 	Message string
 }
 
-func exception(code int, message string) (json myhttp.JSONResponse) {
+func response(code int, message string) (json myhttp.JSONResponse) {
 	json = myhttp.NewJSONResponse()
 	json.Code(code)
-	json.SetData(APIException{
+	json.SetData(apiResponse{
 		Code:    code,
 		Status:  http.StatusText(code),
 		Message: message,
@@ -22,18 +23,22 @@ func exception(code int, message string) (json myhttp.JSONResponse) {
 	return
 }
 
+// BadRequest returns JSONRespnse with status BadRequest
 func BadRequest(message string) myhttp.JSONResponse {
-	return exception(http.StatusBadRequest, message)
+	return response(http.StatusBadRequest, message)
 }
 
+// InternalServerError returns JSONRespnse with status InternalServerError
 func InternalServerError(message string) myhttp.JSONResponse {
-	return exception(http.StatusInternalServerError, message)
+	return response(http.StatusInternalServerError, message)
 }
 
+// MethodNotAllowed returns JSONRespnse with status MethodNotAllowed
 func MethodNotAllowed(message string) myhttp.JSONResponse {
-	return exception(http.StatusMethodNotAllowed, message)
+	return response(http.StatusMethodNotAllowed, message)
 }
 
+// Ok returns JSONRespnse with status OK
 func Ok(message string) myhttp.JSONResponse {
-	return exception(http.StatusOK, message)
+	return response(http.StatusOK, message)
 }

@@ -3,18 +3,21 @@ package entrypoint
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
+
 	"github.com/tcoupin/rok4go/objects"
 	"github.com/tcoupin/rok4go/server/protocol/api"
 	myhttp "github.com/tcoupin/rok4go/server/protocol/http"
 	"github.com/tcoupin/rok4go/utils/log"
-	"net/http"
 )
 
+// APIV1Handler is an handler for api version 1
 type APIV1Handler struct {
 	config *objects.Config
 	mux    *http.ServeMux
 }
 
+// NewAPIV1Handler creates APIV1Handler
 func NewAPIV1Handler(config *objects.Config) http.Handler {
 	h := APIV1Handler{config: config}
 

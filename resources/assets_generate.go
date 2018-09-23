@@ -13,7 +13,7 @@ func main() {
 
 	err := vfsgen.Generate(http.Dir("ui/dist"), vfsgen.Options{
 		PackageName:  "resources",
-		BuildTags:    "!dev,!test",
+		BuildTags:    "dist",
 		VariableName: "Assets",
 	})
 	if err != nil {

@@ -1,9 +1,10 @@
 package http
 
 import (
-	"github.com/stretchr/testify/assert"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestNewHTTPResponse(t *testing.T) {

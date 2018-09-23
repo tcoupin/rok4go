@@ -1,11 +1,13 @@
 package server
 
 import (
+	"net/http"
+
 	"github.com/tcoupin/rok4go/objects"
 	"github.com/tcoupin/rok4go/server/entrypoint"
-	"net/http"
 )
 
+// NewServer create server using provided Config
 func NewServer(listen string, config *objects.Config) *http.Server {
 	mux := http.NewServeMux()
 

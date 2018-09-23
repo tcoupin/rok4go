@@ -1,6 +1,6 @@
-// +build dev test
+// +build !dist
 
-//go:generate go run -tags=dev assets_generate.go
+//go:generate go run assets_generate.go
 
 package resources
 

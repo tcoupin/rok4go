@@ -3,21 +3,24 @@ package backend
 import (
 	"errors"
 	"fmt"
+
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
 	"github.com/tcoupin/rok4go/objects"
 	"github.com/tcoupin/rok4go/utils/log"
 )
 
-const MONGO_COLLECTION = "config"
-const GLOBALCONFIG_TYPE = "GlobalConfig"
-const NAME_TITLE = "title"
-const NAME_KEYWORDS = "keywords"
+const mongoCollection = "config"
+const globalConfigType = "GlobalConfig"
+const nameTitle = "title"
+const nameKeywords = "keywords"
 
+// MongoDB implements backend interface
 type MongoDB struct {
 	session *mgo.Session
 }
 
+// Init the MongoDB bakend connection
 func (m *MongoDB) Init(urlstr interface{}) error {
 	log.DEBUG("Init MongoDB backend storage: %s", urlstr)
 	v, ok := urlstr.(string)
@@ -27,7 +30,7 @@ func (m *MongoDB) Init(urlstr interface{}) error {
 
 	dinfo, err := mgo.ParseURL(v)
 	if err != nil {
-		return errors.New(fmt.Sprintf("Can't parse mongodb url, %v", err))
+		return fmt.Errorf("Can't parse mongodb url, %v", err)
 	}
 
 	session, err := mgo.DialWithInfo(dinfo)
@@ -36,16 +39,18 @@ func (m *MongoDB) Init(urlstr interface{}) error {
 	return err
 }
 
+// GetGlobalConfig loads GlobalConfig from MongoDB backend
 func (m *MongoDB) GetGlobalConfig(c *objects.GlobalConfig) error {
 	log.DEBUG("Load globalconfig from backend")
-	err := m.session.DB("").C(MONGO_COLLECTION).Find(bson.M{"type": GLOBALCONFIG_TYPE}).One(c)
+	err := m.session.DB("").C(mongoCollection).Find(bson.M{"type": globalConfigType}).One(c)
 	log.TRACE("%v", c)
 	return err
 }
 
+// SetGlobalConfig save GlobalConfig to MongoDB backend
 func (m *MongoDB) SetGlobalConfig(c *objects.GlobalConfig) error {
 	log.DEBUG("Update globalconfig to backend")
 	log.TRACE("%v", c)
-	_, err := m.session.DB("").C(MONGO_COLLECTION).Upsert(bson.M{"type": GLOBALCONFIG_TYPE}, bson.M{"$set": c})
+	_, err := m.session.DB("").C(mongoCollection).Upsert(bson.M{"type": globalConfigType}, bson.M{"$set": c})
 	return err
 }
